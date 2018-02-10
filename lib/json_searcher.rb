@@ -39,10 +39,7 @@ class JsonSearcher
   end
 
   def find_in_hash(hash:)
-    result = hash.select do |key, value|
-               found, _ = key_found?(key: key) || search_by_class(data: value)
-               found
-             end
+    result = hash.inject({}) { |result, (key, value)| search_within_hash(result: result, key: key, value: value) }
 
     [result.any?, result]
   end
@@ -59,5 +56,16 @@ class JsonSearcher
 
   def key_found?(key:)
     @query.empty? ? key.empty? : key.to_s.include?(@query)
+  end
+
+  def search_within_hash(result:, key:, value:)
+    if key_found?(key: key)
+      result[key] = value
+    else
+      found, value = search_by_class(data: value)
+      result[key] = value if found
+    end
+
+    result
   end
 end

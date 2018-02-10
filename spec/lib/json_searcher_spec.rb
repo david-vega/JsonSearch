@@ -5,6 +5,7 @@ describe JsonSearcher do
   let(:simple_hash_path) { File.join(support_files_path, 'support', 'simple_hash.json') }
   let(:simple_array_path) { File.join(support_files_path, 'support', 'simple_array.json') }
   let(:simple_string_path) { File.join(support_files_path, 'support', 'simple_string.json') }
+  let(:mix_array_hash_string) { File.join(support_files_path, 'support', 'mix_array_hash_string.json') }
 
   context 'when is a simple hash' do
     subject{ described_class.new(file_name: simple_hash_path) }
@@ -153,6 +154,56 @@ describe JsonSearcher do
       context 'no match' do
         let(:query){ 'Foo Bar' }
         it{ is_expected.to eq([false, nil]) }
+      end
+    end
+  end
+
+  describe 'when is complex json' do
+    subject{ described_class.new(file_name: mix_array_hash_string) }
+
+    describe '#find' do
+      let(:query){ '.com' }
+      subject{ super().find(query: query) }
+
+      context 'searches in all content of the json' do
+        it{ is_expected.to eq([
+            true,
+            [
+              {
+                'url'=>'http://initech.zendesk.com/api/v2/users/1.json',
+                'email'=>'coffeyrasmussen@flotonic.com',
+                'social_media'=> {
+                  'facebook'=>{'links'=>['facebook.com/Coffey']},
+                  'google'=>{'links'=>['google.com/Coffey']}
+                }
+              },
+              {
+                'url'=>'http://initech.zendesk.com/api/v2/users/2.json',
+                'email'=>'jonibarlow@flotonic.com',
+                'social_media'=> {
+                  'facebook'=>{'links'=>['facebook.com/Joni']},
+                  'google'=>{'links'=>['google.com/Joni']}
+                }
+              },
+              {
+                'url'=>'http://initech.zendesk.com/api/v2/users/3.json',
+                'email'=>'buckwagner@flotonic.com',
+                'social_media'=> {
+                  'facebook'=>{'links'=>['facebook.com/Buck']},
+                  'google'=>{'links'=>['google.com/Buck']}
+                }
+              },
+              {
+                'url'=>'http://initech.zendesk.com/api/v2/users/4.json',
+                'email'=>'cardenasnewton@flotonic.com',
+                'social_media'=> {
+                  'facebook'=>{'links'=>['facebook.com/Cardenas']},
+                  'google'=>{'links'=>['google.com/Cardenas']}
+                }
+              }
+            ]
+          ])
+        }
       end
     end
   end

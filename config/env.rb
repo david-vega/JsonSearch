@@ -9,4 +9,3 @@ root_path = Pathname.new(File.expand_path('..', File.dirname(__FILE__)))
 %w[lib].each do |directory|
   Dir[File.expand_path(File.join(root_path, directory,'**','*.rb'))].each {|file| require file }
 end
-

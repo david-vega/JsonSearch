@@ -26,7 +26,7 @@
     "role": "admin",
     "social_media": {
       "facebook": {
-        "links": ["facebook.com/Coffey"],
+        "links": ["facebook.com/Coffey", "fb.co/Coffey"],
         "likes": 67
       },
       "google": {
@@ -62,7 +62,7 @@
     "role": "admin",
     "social_media": {
       "facebook": {
-        "links": ["facebook.com/Joni"],
+        "links": ["facebook.com/Joni", "fb.co/Joni"],
         "likes": 9
       },
       "google": {
@@ -98,7 +98,7 @@
     "role": "end-user",
     "social_media": {
       "facebook": {
-        "links": ["facebook.com/Buck"],
+        "links": ["facebook.com/Buck", "fb.co/Buck"],
         "likes": 56
       },
       "google": {
@@ -134,7 +134,7 @@
     "role": "end-user",
     "social_media": {
       "facebook": {
-        "links": ["facebook.com/Cardenas"],
+        "links": ["facebook.com/Cardenas", "fb.co/Cardenas"],
         "likes": 32
       },
       "google": {
