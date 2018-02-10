@@ -29,7 +29,7 @@ class JsonSearcher
 
   def find_in_array(array:)
     array.map do |data|
-      values = find_in_hash(hash: data)
+      values = search_by_class(data: data)
       values if values.any?
     end.compact
   end
@@ -45,10 +45,14 @@ class JsonSearcher
   end
 
   def key_found?(key:)
-    key.to_s.include?(@query)
+    @query.empty? ? key.empty? : key.to_s.include?(@query)
   end
 
   def value_found?(value:)
-    @query == 'null' && value.nil? || search_by_class(data: value)
+    if @query.empty?
+      value.nil? || value.to_s.empty?
+    else
+      search_by_class(data: value)
+    end
   end
 end

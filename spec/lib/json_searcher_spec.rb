@@ -44,6 +44,18 @@ describe JsonSearcher do
         end
       end
 
+      context 'search by null values' do
+        let(:query){ '' }
+        it do
+          is_expected.to eq({
+            'domain_names' => nil,
+            'tags' => nil,
+            '' => 'empty key',
+            'empty_value' => ''
+          })
+        end
+      end
+
       context 'no match' do
         let(:query){ 'Foo Bar' }
         it do
