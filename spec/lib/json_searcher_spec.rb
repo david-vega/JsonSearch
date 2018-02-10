@@ -48,6 +48,16 @@ describe JsonSearcher do
         end
       end
 
+      context 'search a false bolean' do
+        let(:query){ 'false' }
+        it{ is_expected.to eq([true, { 'shared_tickets' => false }]) }
+      end
+
+      context 'search a true bolean' do
+        let(:query){ 'true' }
+        it{ is_expected.to eq([true, { 'shared_account' => true }]) }
+      end
+
       context 'search by null and empty values' do
         let(:query){ '' }
         it do
@@ -97,6 +107,16 @@ describe JsonSearcher do
       context 'the full query does not exist' do
         let(:query){ 'Idledale Foo Bar' }
         it{ is_expected.to eq([false, []]) }
+      end
+
+      context 'search a false bolean' do
+        let(:query){ 'false' }
+        it{ is_expected.to eq([true, [false]]) }
+      end
+
+      context 'search a true bolean' do
+        let(:query){ 'true' }
+        it{ is_expected.to eq([true, [true]]) }
       end
 
       context 'search by null and empty values ' do

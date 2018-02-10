@@ -34,7 +34,8 @@ class JsonSearcher
                result
              end
     
-    [result.any?, result]
+    # when result = [false], result.any? => false :(
+    [!result.empty?, result]
   end
 
   def find_in_hash(hash:)
