@@ -43,18 +43,50 @@ describe JsonSearcher do
           })
         end
       end
+
+      context 'no match' do
+        let(:query){ 'Foo Bar' }
+        it do
+          is_expected.to eq({})
+        end
+      end
     end
   end
 
   describe 'when is an array' do
     subject{ described_class.new(file_name: simple_array_path) }
 
-    xit{}
+    it{ expect(subject.data).to eq JSON.parse(File.read(simple_array_path)) }
   end
 
   describe 'when is an string' do
     subject{ described_class.new(file_name: simple_string_path) }
 
-    xit{}
+    it{ expect(subject.data).to eq JSON.parse(File.read(simple_string_path)) }
+
+    describe '#find' do
+      let(:query){ 'Json' }
+      subject{ super().find(query: query) }
+
+      context 'search close match' do
+        let(:query){ 'This is a Json string' }
+        it{ is_expected.to eq('This is a Json string') }
+      end
+
+      context 'search exact match' do
+        let(:query){ 'This is a Json string' }
+        it{ is_expected.to eq('This is a Json string') }
+      end
+
+      context 'the full query does not exist' do
+        let(:query){ 'This is a Json string # the whole string is not included' }
+        it{ is_expected.to be_nil }
+      end
+
+      context 'no match' do
+        let(:query){ 'Foo Bar' }
+        it{ is_expected.to be_nil }
+      end
+    end
   end
 end

@@ -11,21 +11,26 @@ class JsonSearcher
   def find(query:)
     @query = query
 
-    case @data.class.to_s
-    when 'Array'
-      find_in_array(array: @data)
-    when 'Hash'
-      find_in_hash(hash: @data)
-    else
-      find_in_string(string: @data)
-    end
+    search_by_class(data: @data)
   end
 
   private
+  
+  def search_by_class(data:)
+    case data.class.to_s
+    when 'Array'
+      find_in_array(array: data)
+    when 'Hash'
+      find_in_hash(hash: data)
+    else
+      find_in_string(string: data)
+    end
+  end
 
   def find_in_array(array:)
     array.map do |data|
-      #TODO complete this method
+      values = find_in_hash(hash: data)
+      values if values.any?
     end.compact
   end
 
@@ -36,7 +41,7 @@ class JsonSearcher
   end
 
   def find_in_string(string:)
-    #TODO complete this method
+    string if string.to_s.include?(@query)
   end
 
   def key_found?(key:)
@@ -44,6 +49,6 @@ class JsonSearcher
   end
 
   def value_found?(value:)
-    @query == 'null' && value.nil? || value.to_s.include?(@query)
+    @query == 'null' && value.nil? || search_by_class(data: value)
   end
 end
