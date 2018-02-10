@@ -1,11 +1,14 @@
 require 'json'
 
 class JsonSearcher
-  attr_reader :data
+  attr_reader :data, :name
 
-  def initialize(file_name:)
-    @file_name = file_name
-    @data = JSON.parse(File.read(@file_name))
+  FILE_NAME_REGEX = /([^\/]+)(?=\.\w+$)/.freeze
+
+  def initialize(file_path:)
+    @file_path = file_path
+    @name = file_path[FILE_NAME_REGEX]
+    @data = JSON.parse(File.read(@file_path))
   end
 
   def find(query:)
@@ -15,7 +18,7 @@ class JsonSearcher
   end
 
   private
-  
+
   def search_by_class(data:)
     case data.class.to_s
     when 'Array'
@@ -33,7 +36,7 @@ class JsonSearcher
                result << value if found
                result
              end
-    
+
     # when result = [false], result.any? => false :(
     [!result.empty?, result]
   end
@@ -50,7 +53,7 @@ class JsonSearcher
             else
               value.to_s.include?(@query)
             end
-    
+
     [found, (value if found)]
   end
 
