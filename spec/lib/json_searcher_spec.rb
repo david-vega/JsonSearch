@@ -16,50 +16,56 @@ describe JsonSearcher do
       subject{ super().find(query: query) }
 
       context 'search close single match' do
-        it{ is_expected.to eq({ 'details' => 'MegaCorp' }) }
+        it{ is_expected.to eq([true, { 'details' => 'MegaCorp' }]) }
       end
 
       context 'search close multiple match' do
         let(:query){ '8' }
         it do
-          is_expected.to eq({
-            'external_id' => '9270ed79-35eb-4a38-a46f-35725197ea8d',
-            'created_at' => '2016-05-21T11:10:28 -10:00'
-          })
+          is_expected.to eq([
+            true, {
+              'external_id' => '9270ed79-35eb-4a38-a46f-35725197ea8d',
+              'created_at' => '2016-05-21T11:10:28 -10:00'
+            }
+          ])
         end
       end
 
       context 'search by single key' do
         let(:query){ 'domain_names' }
-        it{ is_expected.to eq({ 'domain_names' => nil }) }
+        it{ is_expected.to eq([true, { 'domain_names' => nil }]) }
       end
 
       context 'search by multiple key' do
         let(:query){ '_id' }
         it do
-          is_expected.to eq({
-            '_id' => 101,
-            'external_id' => '9270ed79-35eb-4a38-a46f-35725197ea8d'
-          })
+          is_expected.to eq([
+            true, {
+              '_id' => 101,
+              'external_id' => '9270ed79-35eb-4a38-a46f-35725197ea8d'
+            }
+          ])
         end
       end
 
-      context 'search by null values' do
+      context 'search by null and empty values' do
         let(:query){ '' }
         it do
-          is_expected.to eq({
-            'domain_names' => nil,
-            'tags' => nil,
-            '' => 'empty key',
-            'empty_value' => ''
-          })
+          is_expected.to eq([
+            true, {
+              'domain_names' => nil,
+              'tags' => nil,
+              '' => 'empty key',
+              'empty_value' => ''
+            }
+          ])
         end
       end
 
       context 'no match' do
         let(:query){ 'Foo Bar' }
         it do
-          is_expected.to eq({})
+          is_expected.to eq([false, {}])
         end
       end
     end
@@ -69,6 +75,35 @@ describe JsonSearcher do
     subject{ described_class.new(file_name: simple_array_path) }
 
     it{ expect(subject.data).to eq JSON.parse(File.read(simple_array_path)) }
+
+    describe '#find' do
+      let(:query){ 'le' }
+      subject{ super().find(query: query) }
+  
+      context 'search close match' do
+        it{ is_expected.to eq([true, ['Idledale', 'Allendale']]) }
+      end
+
+      context 'search exact match' do
+        let(:query){ 'Idledale' }
+        it{ is_expected.to eq([true, ['Idledale']]) }
+      end
+
+      context 'the full query does not exist' do
+        let(:query){ 'Idledale Foo Bar' }
+        it{ is_expected.to eq([false, []]) }
+      end
+
+      context 'the full query does not exist' do
+        let(:query){ 'Idledale Foo Bar' }
+        it{ is_expected.to eq([false, []]) }
+      end
+
+      context 'search by null and empty values ' do
+        let(:query){ '' }
+        it{ is_expected.to eq([true, ['', nil]]) }
+      end
+    end
   end
 
   describe 'when is an string' do
@@ -82,22 +117,22 @@ describe JsonSearcher do
 
       context 'search close match' do
         let(:query){ 'This is a Json string' }
-        it{ is_expected.to eq('This is a Json string') }
+        it{ is_expected.to eq([true, 'This is a Json string']) }
       end
 
       context 'search exact match' do
         let(:query){ 'This is a Json string' }
-        it{ is_expected.to eq('This is a Json string') }
+        it{ is_expected.to eq([true, 'This is a Json string']) }
       end
 
       context 'the full query does not exist' do
         let(:query){ 'This is a Json string # the whole string is not included' }
-        it{ is_expected.to be_nil }
+        it{ is_expected.to eq([false, nil]) }
       end
 
       context 'no match' do
         let(:query){ 'Foo Bar' }
-        it{ is_expected.to be_nil }
+        it{ is_expected.to eq([false, nil]) }
       end
     end
   end
