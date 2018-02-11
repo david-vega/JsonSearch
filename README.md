@@ -1,4 +1,4 @@
-# JsonSearch
+# JsonSearch [![Build Status](https://travis-ci.org/david-vega/JsonSearch.svg?branch=master)](https://travis-ci.org/david-vega/JsonSearch)
 
 Ruby command line application for search in JSON formatted files.
 
