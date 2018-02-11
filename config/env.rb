@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require 'json'
 
 ENV['RACK_ENV'] ||= 'development'
 

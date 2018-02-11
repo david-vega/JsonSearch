@@ -1,5 +1,3 @@
-require 'json'
-
 class JsonSearcher
   attr_reader :data, :name
 
