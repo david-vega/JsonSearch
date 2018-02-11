@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SystemConsoleIO::JsonSearchIO do
+  let(:json_search_io){ described_class.new }
   let(:exit_input_io){ '[[exit]]' }
   let(:help_input_io){ '[[help]]' }
   let(:file_input_io){ '[[file]]' }
@@ -30,10 +31,10 @@ describe SystemConsoleIO::JsonSearchIO do
       simple_string
       simple_hash
       mix_array_hash_string
-    ]
+    ].sort
   end
 
-  subject{ described_class.new }
+  subject{ json_search_io }
 
   before do
     files_path = Dir[File.expand_path(File.join(SUPPORT_FILES_PATH, 'support','*.json'))]
@@ -42,7 +43,7 @@ describe SystemConsoleIO::JsonSearchIO do
   end
 
   describe '#initialize' do
-    it{ expect(subject.instance_variable_get(:@json_searchers).keys).to eq(json_files) }
+    it{ expect(subject.instance_variable_get(:@json_searchers).keys.sort).to eq(json_files) }
     it{ expect(subject.instance_variable_get(:@loop)).to be_truthy }
     it{ expect(subject.instance_variable_get(:@file_selection)).to eq([]) }
   end

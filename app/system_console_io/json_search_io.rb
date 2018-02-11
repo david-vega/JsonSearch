@@ -58,7 +58,7 @@ class SystemConsoleIO
 
     def file_search
       system 'clear'
-      puts "#{AVAILABLE_FILES}\n  #{@json_searchers.keys.join("\n  ").brown}".bold
+      puts "#{AVAILABLE_FILES}\n  #{available_files}".bold
       @file_selection = STDIN.gets.chomp.split(FILE_SPLIT_REGEX)
     end
 
@@ -94,6 +94,10 @@ class SystemConsoleIO
           ap result
         end
       end
+    end
+
+    def available_files
+      @available_files ||= @json_searchers.keys.sort.join("\n  ").brown
     end
 
     def show_help
