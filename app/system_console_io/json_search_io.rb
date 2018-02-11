@@ -1,15 +1,31 @@
 class SystemConsoleIO
   class JsonSearchIO
+    TITLE = 'Welcome to JsonSearch!'.bold.freeze
+    INTRODUCTION = 'Enter "[[exit]]" to exit, or "[[help]]" for a full list of commands.'.freeze
+    WELCOME_MESSAGE = "#{TITLE}\n#{INTRODUCTION}".freeze
+    GOODBYE = "\nGoodbye!".bold.freeze
+    SEARCH = "\nSearch:".bold.cyan.freeze
+    NO_RESULTS = 'No results'.bold.red.freeze
+    HELP_COMMANDS = "#{'Command  | Action'.bold}\n"\
+                    "#{'[[exit]]'.gray} | #{'Exits the application'.gray}\n" \
+                    "#{'[[help]]'.gray} | #{'Shows the help'.gray}\n".freeze
+
     def initialize
       @json_searchers = get_json_searchers
     end
 
     def start
       greeting
+      console_search
+      goodbye
+    end
 
+    private
+
+    def console_search
       while true
-        puts "\nSearch:".bold.cyan
-        @query = gets.chomp
+        puts SEARCH
+        @query = STDIN.gets.chomp
 
         case @query
         when '[[exit]]'
@@ -21,11 +37,7 @@ class SystemConsoleIO
           process_search
         end
       end
-
-      goodbye
     end
-
-    private
 
     def search
       @json_searchers.inject({}) do |results, (key, json_searcher)|
@@ -40,7 +52,7 @@ class SystemConsoleIO
       results = search
 
       if results.empty?
-        puts 'No results'.bold.red
+        puts NO_RESULTS
       else
         results.each do |key, result|
           puts "\n Found in: \"#{key}\"".bold.green
@@ -51,17 +63,16 @@ class SystemConsoleIO
 
     def show_help
       system 'clear'
-      puts 'TODO add help commands'
+      puts HELP_COMMANDS
     end
 
     def greeting
       system 'clear'
-      puts "Welcome to JsonSearch!".bold
-      puts "Enter [[exit]] to exit, or [[help]] for a full list of commands."
+      puts WELCOME_MESSAGE
     end
 
     def goodbye
-      puts "\nGoodbye!".bold
+      puts GOODBYE
     end
 
     def get_json_searchers

@@ -9,8 +9,10 @@ describe JsonSearcher do
   context 'when is a simple hash' do
     subject{ described_class.new(file_path: simple_hash_path) }
 
-    it{ expect(subject.data).to eq JSON.parse(File.read(simple_hash_path)) }
-    it{ expect(subject.name).to eq 'simple_hash' }
+    describe '#initialize' do
+      it{ expect(subject.data).to eq JSON.parse(File.read(simple_hash_path)) }
+      it{ expect(subject.name).to eq 'simple_hash' }
+    end
 
     describe '#find' do
       let(:query){ 'Mega' }
@@ -85,8 +87,10 @@ describe JsonSearcher do
   describe 'when is an array' do
     subject{ described_class.new(file_path: simple_array_path) }
 
-    it{ expect(subject.data).to eq JSON.parse(File.read(simple_array_path)) }
-    it{ expect(subject.name).to eq 'simple_array' }
+    describe '#initialize' do
+      it{ expect(subject.data).to eq JSON.parse(File.read(simple_array_path)) }
+      it{ expect(subject.name).to eq 'simple_array' }
+    end
 
     describe '#find' do
       let(:query){ 'le' }
@@ -131,8 +135,10 @@ describe JsonSearcher do
   describe 'when is an string' do
     subject{ described_class.new(file_path: simple_string_path) }
 
-    it{ expect(subject.data).to eq JSON.parse(File.read(simple_string_path)) }
-    it{ expect(subject.name).to eq 'simple_string' }
+    describe '#initialize' do
+      it{ expect(subject.data).to eq JSON.parse(File.read(simple_string_path)) }
+      it{ expect(subject.name).to eq 'simple_string' }
+    end
 
     describe '#find' do
       let(:query){ 'Json' }
@@ -162,7 +168,11 @@ describe JsonSearcher do
 
   describe 'when is complex json' do
     subject{ described_class.new(file_path: mix_array_hash_string_path) }
-    it{ expect(subject.name).to eq 'mix_array_hash_string' }
+
+    describe '#initialize' do
+      it{ expect(subject.data).to eq JSON.parse(File.read(mix_array_hash_string_path)) }
+      it{ expect(subject.name).to eq 'mix_array_hash_string' }
+    end
 
     describe '#find' do
       let(:query){ '.com' }
