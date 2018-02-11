@@ -2,6 +2,15 @@
 
 Ruby command line application for search in JSON formatted files.
 
+__Welcome__
+
+![Welcome screenshot](https://monosnap.com/file/dO05CZnlTrYdIDBEpHZTWdAn1nU6QN.png)
+
+__Search Results__
+
+![Search results](https://monosnap.com/file/xog0D2bpW9nwLpMtWR4dLt6Pe98sYQ.png)
+
+
 ## Requirements
   - Unix command-line environment *(Not tested on Windows, it might just work)*
   - [Ruby](https://www.ruby-lang.org) v2.5.0
