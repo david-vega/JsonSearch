@@ -1,5 +1,5 @@
-#Special thanks to logrusorgru (github) for the color codes
-
+# String class adds color functionality to the original String class
+# Special thanks to logrusorgru (https://github.com/logrusorgru) for the color codes
 class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
