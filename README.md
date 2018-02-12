@@ -27,6 +27,7 @@ __Search Results__
   - The program searches in all the available files by default, you'll have to use the `[[file]]` command to limit the search 
   - Feel free to add other Json files to the resources folder.
   - The program loads the Json files on load, you'll have to restart in order to have the files available
+  - Your can opt to make `json_search.rb` as executable file, just type: `chmod 755 json_search.rb`
   
 ### Commands
   - `[[file]]` Lets you specify the files you want to search, you'll have to specify the file(s) from the given list

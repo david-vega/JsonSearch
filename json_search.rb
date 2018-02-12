@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# Runs the application from the command line
 begin
   require File.join(File.expand_path(File.dirname(__FILE__)), 'config', 'env.rb')
 

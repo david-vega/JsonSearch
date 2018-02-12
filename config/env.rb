@@ -1,3 +1,4 @@
+# Configures and loads the necessary files to run the application
 require 'rubygems'
 require 'bundler'
 require 'json'
