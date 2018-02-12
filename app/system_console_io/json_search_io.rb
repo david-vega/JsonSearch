@@ -71,14 +71,14 @@ class SystemConsoleIO
     # receives and stores the user's input list of files
     def specify_files_to_search
       system 'clear'
-      puts "#{AVAILABLE_FILES}\n  #{@json_searchers.keys.join("\n  ").brown}".bold
+      puts "#{AVAILABLE_FILES}\n  #{available_files}".bold
       @file_selection = STDIN.gets.chomp.split(FILE_SPLIT_REGEX)
     end
 
     # Searches in the given JsonSearchers
     # == Params:
     # - json_searchers: [Hash] Contains all the JsonSearch objects to execute the search
-    # ==Result
+    # == Result
     # - [Hash] Search results
     def search(json_searchers:)
       json_searchers.inject({}) do |results, (key, json_searcher)|
@@ -115,6 +115,13 @@ class SystemConsoleIO
           ap result
         end
       end
+    end
+
+    # List of available files alphabetically sorted
+    # == Result:
+    # - [Array] list of available file names to search
+    def available_files
+      @available_files ||= @json_searchers.keys.sort.join("\n  ").brown
     end
 
     # Prints a list of available commands with description
