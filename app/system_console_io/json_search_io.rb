@@ -147,6 +147,8 @@ class SystemConsoleIO
     end
 
     # Loads and creates a JsonSearcher model for each file in 'resources' folder
+    # == Result:
+    # [Hash[JsonSearcher] Collection of JsonSearcher objects
     def get_json_searchers
       Dir[File.expand_path(File.join(ROOT_PATH, 'resources','*.json'))].inject({}) do |json_searchers, file_path|
         json_searcher = JsonSearcher.new(file_path: file_path) rescue nil
