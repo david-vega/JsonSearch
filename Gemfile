@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
+gem 'awesome_print'
+
 group :development, :test do
-  gem 'awesome_print'
   gem 'pry'
 end
 
